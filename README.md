@@ -1,5 +1,4 @@
-FUEL, Factor's Ultimate Emacs Library
--------------------------------------
+# FUEL, Factor's Ultimate Emacs Library
 
 FUEL provides a complete environment for your Factor coding pleasure
 inside Emacs, including source code edition and interaction with a
@@ -9,92 +8,69 @@ FUEL was started by Jose A Ortega as an extension to Eduardo Cavazos'
 original factor.el code. Eduardo is also responsible of naming the
 beast.
 
-* Installation
+## Installation
 
-  FUEL comes bundled with Factor's distribution. The folder misc/fuel
-  contains Elisp code, and there's a fuel vocabulary in extras/fuel.
+FUEL comes bundled with [Factor](http://factorcode.org/), in the folder misc/fuel.
 
-  To install FUEL, either add this line to your Emacs initialisation:
+To install FUEL, setup [Marmalade](http://marmalade-repo.org/) and `M-x package-install fuel` and add this line to your Emacs initialisation:
 
-  (load-file "<path/to/factor/installation>/misc/fuel/fu.el")
+    (require 'factor-mode)
 
-  If all you want is a major mode for editing Factor code with pretty
-  font colors and indentation, without running the factor listener
-  inside Emacs, you can use instead:
+## Basic usage
 
-  (add-to-list 'load-path "<path/to/factor/installation>/fuel")
-  (setq factor-mode-use-fuel nil)
-  (require 'factor-mode)
+### Running the listener
 
-* Basic usage
-*** Running the listener
+If you're using the default factor binary and images locations inside the Factor's source tree, that should be enough to start using FUEL.
 
-    If you're using the default factor binary and images locations inside
-    the Factor's source tree, that should be enough to start using FUEL.
-    Editing any file with the extension .factor will put you in
-    factor-mode; try C-hm for a summary of available commands.
+Editing any file with the extension `.factor` will put you in factor-mode; try `C-hm` for a summary of available commands.
 
-    To start the listener, try M-x run-factor.
+To start the listener, try `M-x run-factor`.
 
-    By default, FUEL will try to use the binary and image files in the
-    factor installation directory. You can customize them with:
+By default, FUEL will try to use the binary and image files in the factor installation directory. You can customize them with:
 
     (setq fuel-listener-factor-binary <full path to factor>)
     (setq fuel-listener-factor-image <full path to factor image>)
 
-    Many aspects of the environment can be customized:
-    M-x customize-group fuel will show you how many.
+Many aspects of the environment can be customized: `M-x customize-group fuel` will show you how many.
 
-*** Faster listener startup
+### Faster listener startup
 
-    On startup, run-factor loads the fuel vocabulary, which can take a
-    while. If you want to speedup the load process, type 'save' in the
-    listener prompt just after invoking run-factor. This will save a
-    factor image (overwriting the current one) with all the needed
-    vocabs.
+On startup, run-factor loads the fuel vocabulary, which can take a while. If you want to speedup the load process, type `save` in the listener prompt just after invoking run-factor. This will save a factor image (overwriting the current one) with all the needed vocabs.
 
-    Alternatively, you can add the following line to your
-    .factor-boot-rc file:
+Alternatively, you can add the following line to your `.factor-boot-rc` file:
 
-       "fuel" require
+    "fuel" require
 
-    This will ensure that the image generated while bootstrapping
-    Factor contains fuel and the vocabularies it depends on.
+This will ensure that the image generated while bootstrapping Factor contains fuel and the vocabularies it depends on.
 
-*** Connecting to a running Factor
+### Connecting to a running Factor
 
-    'run-factor' starts a new factor listener process managed by Emacs.
-    If you prefer to start Factor externally, you can also connect
-    remotely from Emacs. Here's how to proceed:
+`run-factor` starts a new factor listener process managed by Emacs. If you prefer to start Factor externally, you can also connect remotely from Emacs. Here's how to proceed:
 
-    - In the factor listener, run FUEL: "fuel" run
-      This will start a server listener in port 9000.
-    - Switch to Emacs and issue the command 'M-x connect-to-factor'.
+* In the factor listener, run FUEL: "fuel" run. This will start a server listener in port 9000.
+* Switch to Emacs and issue the command `M-x connect-to-factor`.
 
-  That's it; you should be up and running. See the help for
-  'connect-to-factor' for how to use a different port.
+That's it; you should be up and running. See the help for `connect-to-factor` for how to use a different port.
 
-*** Vocabulary creation
+### Vocabulary creation
 
-    FUEL offers a basic interface to Factor's scaffolding utilities.
-    To create a new vocabulary directory and associated files:
+FUEL offers a basic interface to Factor's scaffolding utilities. To create a new vocabulary directory and associated files:
 
-       M-x fuel-scaffold-vocab
+    M-x fuel-scaffold-vocab
 
-    and when in a vocab file, to create a docs file with boilerplate
-    for each word:
+and when in a vocab file, to create a docs file with boilerplate
+for each word:
 
-       M-x fuel-scaffold-help
+    M-x fuel-scaffold-help
 
-* Quick key reference
+#### Quick key reference
 
-  Triple chords ending in a single letter <x> accept also C-<x> (e.g.
-  C-c C-e C-r is the same as C-c C-e r).
+Triple chords ending in a single letter <x> accept also C-<x> (e.g. C-c C-e C-r is the same as C-c C-e r).
 
-*** In factor source files:
+### In factor source files
 
-    Commands in parenthesis can be invoked interactively with
-    M-x <command>, not necessarily in a factor buffer.
+Commands in parenthesis can be invoked interactively with
+M-x <command>, not necessarily in a factor buffer.
 
     |--------------------+------------------------------------------------------------|
     | C-c C-z            | switch to listener (run-factor)                            |
@@ -144,7 +120,7 @@ beast.
     |                    | (fuel-refactor-make-generic)                               |
     |--------------------+------------------------------------------------------------|
 
-*** In the listener:
+### In the listener
 
     |---------+----------------------------------------------------------|
     | TAB     | complete word at point                                   |
@@ -158,7 +134,7 @@ beast.
     | C-c C-k | run file                                                 |
     |---------+----------------------------------------------------------|
 
-*** In the debugger (it pops up upon eval/compilation errors):
+### In the debugger (it pops up upon eval/compilation errors)
 
     |---------+-------------------------------------|
     | g       | go to error                         |
@@ -167,7 +143,7 @@ beast.
     | q       | bury buffer                         |
     |---------+-------------------------------------|
 
-*** In the help browser:
+### In the help browser
 
     |-----------+----------------------------------------------------------|
     | h         | help for word at point                                   |
@@ -189,7 +165,7 @@ beast.
     | q         | bury buffer                                              |
     |-----------+----------------------------------------------------------|
 
-*** In crossref buffers
+### In crossref buffers
 
     |-----------------+-----------------------------|
     | TAB/BACKTAB     | navigate links              |
